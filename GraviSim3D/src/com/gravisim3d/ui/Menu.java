@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gravisim3d.core.PVectorD;
+import com.gravisim3d.event.IClickListener;
+import com.gravisim3d.event.IHoverListener;
 
 import processing.core.PGraphics;
 
@@ -313,9 +315,18 @@ public class Menu extends Panel {
 	 */
 	public Button[] createMenuItems(IMenuItem[] menu_items) {
 		Button[] ret = new Button[menu_items.length];
+		IClickListener cl;
+		IHoverListener hl;
 		for (int i = 0; i < menu_items.length; i++) {
 			ret[i] = createMenuItem("");
 			ret[i].setHint(menu_items[i].getTitle() + "\n\n" + menu_items[i].getDescription());
+			cl = menu_items[i].getClickListener();
+			if (cl != null)
+				ret[i].getClickNotifier().addListener(cl);
+			hl = menu_items[i].getHoverListener();
+			if (hl != null)
+				ret[i].getHoverNotifier().addListener(hl);
+
 		}
 		return ret;
 	}

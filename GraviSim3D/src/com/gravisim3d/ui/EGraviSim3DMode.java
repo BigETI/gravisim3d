@@ -1,5 +1,8 @@
 package com.gravisim3d.ui;
 
+import com.gravisim3d.event.IClickListener;
+import com.gravisim3d.event.IHoverListener;
+
 /**
  * GraviSim3D mode enumerator
  * 
@@ -34,6 +37,16 @@ public enum EGraviSim3DMode implements IMenuItem {
 	private String description;
 
 	/**
+	 * Click listener
+	 */
+	private IClickListener click_listener = null;
+
+	/**
+	 * Hover listener
+	 */
+	private IHoverListener hover_listener = null;
+
+	/**
 	 * Constructor
 	 * 
 	 * @param title
@@ -64,5 +77,47 @@ public enum EGraviSim3DMode implements IMenuItem {
 	@Override
 	public String getDescription() {
 		return description;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gravisim3d.ui.IMenuItem#setClickListener(com.gravisim3d.event.
+	 * IClickListener)
+	 */
+	@Override
+	public void setClickListener(IClickListener click_listener) {
+		this.click_listener = click_listener;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gravisim3d.ui.IMenuItem#getClickListener()
+	 */
+	@Override
+	public IClickListener getClickListener() {
+		return click_listener;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gravisim3d.ui.IMenuItem#setHoverListener(com.gravisim3d.event.
+	 * IHoverListener)
+	 */
+	@Override
+	public void setHoverListener(IHoverListener hover_listener) {
+		this.hover_listener = hover_listener;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gravisim3d.ui.IMenuItem#getHoverListener()
+	 */
+	@Override
+	public IHoverListener getHoverListener() {
+		return hover_listener;
 	}
 }

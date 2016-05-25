@@ -25,12 +25,12 @@ public class GraviSim3D extends PApplet {
 	private static GraviSim3D applet;
 
 	/**
-	 * Background Scene
+	 * Background scene
 	 */
 	private UI bg;
 
 	/**
-	 * Universe Scene
+	 * Universe scene
 	 */
 	private Universe3D universe;
 
@@ -74,7 +74,9 @@ public class GraviSim3D extends PApplet {
 	 */
 	private Button[] mode_menu_items = new Button[EGraviSim3DMode.values().length];
 
-	// Hint controller
+	/**
+	 * Hint controller
+	 */
 	private HintController hint_controller;
 
 	/**
