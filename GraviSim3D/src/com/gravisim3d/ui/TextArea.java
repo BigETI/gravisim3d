@@ -1,7 +1,14 @@
 package com.gravisim3d.ui;
-public class TextArea /*extends Panel*/ {
-  
-  //private Button client_panel;
-  
-  //private Text 
+
+/**
+ * Drawable text area (W.I.P.)
+ * 
+ * @author Ethem Kurt
+ *
+ */
+public class TextArea /* extends Panel */ {
+
+	// private Button client_panel;
+
+	// private Text
 }

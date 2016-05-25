@@ -9,25 +9,66 @@ import com.gravisim3d.event.HoverEventArgs;
 
 import processing.core.PGraphics;
 
+/**
+ * Drawable universe class
+ * 
+ * @author Ethem Kurt
+ *
+ */
 public class Universe3D extends UI {
 
+	/**
+	 * Gravitational constant
+	 */
 	private double gravitational_constant;
+
+	/**
+	 * Physical objects
+	 */
 	private LinkedList<APhysical> physical_objects = new LinkedList<APhysical>();
+
+	/**
+	 * Last milliseconds
+	 */
 	private long last_millis = System.currentTimeMillis();
+
+	/**
+	 * Text graphics
+	 */
 	private PGraphics text_graphics;
 
-	public Universe3D(double x, double y, double d) {
-		super(x, y);
-		allowDepthBuffer(true);
-		text_graphics = GraviSim3D.getApplet().createGraphics((int) x, (int) y);
-		this.gravitational_constant = d;
+	/**
+	 * Constructor
+	 * 
+	 * @param size_x
+	 *            Size X
+	 * @param size_y
+	 *            Size y
+	 * @param gravitational_constant
+	 *            Gravitational constant
+	 */
+	public Universe3D(double size_x, double size_y, double gravitational_constant) {
+		super(size_x, size_y);
+		text_graphics = GraviSim3D.getApplet().createGraphics((int) size_x, (int) size_y);
+		this.gravitational_constant = gravitational_constant;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gravisim3d.ui.UI#draw(processing.core.PGraphics)
+	 */
 	@Override
 	protected void draw(PGraphics graphics) {
 		//
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gravisim3d.ui.ADrawable#processInput(double, double, boolean,
+	 * com.gravisim3d.core.PVectorD)
+	 */
 	@Override
 	public void processInput(double pos_x, double pos_y, boolean pressed, PVectorD constraint) {
 		super.processInput(pos_x, pos_y, pressed, constraint);
@@ -74,6 +115,11 @@ public class Universe3D extends UI {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gravisim3d.ui.ADrawable#drawSiblings(processing.core.PGraphics)
+	 */
 	@Override
 	protected void drawSiblings(PGraphics graphics) {
 		super.drawSiblings(graphics);
@@ -93,6 +139,11 @@ public class Universe3D extends UI {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gravisim3d.ui.UI#drawMain()
+	 */
 	@Override
 	public void drawMain() {
 		super.drawMain();
@@ -106,17 +157,28 @@ public class Universe3D extends UI {
 		text_graphics.endDraw();
 	}
 
+	/**
+	 * Add physical object
+	 * 
+	 * @param p
+	 */
 	public void addPhysicalObject(APhysical p) {
 		if (p != null)
 			physical_objects.add(p);
 	}
 
+	/**
+	 * Remove all physical objects
+	 */
 	public void clear() {
 		for (APhysical i : physical_objects)
 			i.dispose();
 		physical_objects.clear();
 	}
 
+	/**
+	 * Remove last physical object
+	 */
 	public void removeLast() {
 		APhysical physical_object;
 		if (physical_objects.size() > 0) {
@@ -126,14 +188,29 @@ public class Universe3D extends UI {
 		}
 	}
 
+	/**
+	 * Get gravitational constant
+	 * 
+	 * @return Gravitational constant
+	 */
 	public double getGravitationalConstant() {
 		return gravitational_constant;
 	}
 
+	/**
+	 * Get physical objects
+	 * 
+	 * @return Physical objects
+	 */
 	public List<APhysical> getPhysicalObjects() {
 		return physical_objects;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gravisim3d.ui.ADrawable#dispose()
+	 */
 	@Override
 	public void dispose() {
 		super.dispose();

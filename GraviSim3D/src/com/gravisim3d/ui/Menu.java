@@ -7,23 +7,89 @@ import com.gravisim3d.core.PVectorD;
 
 import processing.core.PGraphics;
 
+/**
+ * Drawable menu class
+ * 
+ * @author Ethem Kurt
+ *
+ */
 public class Menu extends Panel {
 
+	/**
+	 * Buttons
+	 */
 	private ArrayList<Button> buttons = new ArrayList<Button>();
 
+	/**
+	 * Button color
+	 */
 	private int button_color;
+
+	/**
+	 * Button hover color
+	 */
 	private int button_hover_color;
+
+	/**
+	 * Button click color
+	 */
 	private int button_click_color;
+
+	/**
+	 * Button glow color
+	 */
 	private int button_glow_color;
 
+	/**
+	 * Button size
+	 */
 	private double button_size;
 
+	/**
+	 * Menu size
+	 */
 	private double menu_size;
 
+	/**
+	 * Padding
+	 */
 	private double padding = 5.0;
 
+	/**
+	 * Menu alignment
+	 */
 	private EMenuAlignment menu_alignment;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param x
+	 *            X
+	 * @param y
+	 *            Y
+	 * @param z
+	 *            Z
+	 * @param menu_size
+	 *            Menu size
+	 * @param button_size
+	 *            Button size
+	 * @param horizontal_alignment
+	 *            Horizontal alignment
+	 * @param vertical_alignment
+	 *            Vertical alignment
+	 * @param color
+	 *            Color
+	 * @param button_color
+	 *            Button color
+	 * @param button_hover_color
+	 *            Button hover color
+	 * @param button_click_color
+	 *            Button click color
+	 * @param button_glow_color
+	 *            Button glow color
+	 * @param menu_alignment
+	 *            Menu alignment
+	 */
 	public Menu(double x, double y, double z, double menu_size, double button_size,
 			EHorizontalAlignment horizontal_alignment, EVerticalAlignment vertical_alignment, int color,
 			int button_color, int button_hover_color, int button_click_color, int button_glow_color,
@@ -39,6 +105,9 @@ public class Menu extends Panel {
 		arrangeButtons();
 	}
 
+	/**
+	 * Fix menu size
+	 */
 	private void fixMenuSize() {
 		if (menu_alignment != null) {
 			switch (menu_alignment) {
@@ -54,6 +123,9 @@ public class Menu extends Panel {
 		}
 	}
 
+	/**
+	 * Arrange buttons
+	 */
 	private void arrangeButtons() {
 		double offset;
 		fixMenuSize();
@@ -85,6 +157,12 @@ public class Menu extends Panel {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gravisim3d.ui.ADrawable#processInput(double, double, boolean,
+	 * com.gravisim3d.core.PVectorD)
+	 */
 	@Override
 	public void processInput(double pos_x, double pos_y, boolean pressed, PVectorD constraint) {
 		super.processInput(pos_x, pos_y, pressed, constraint);
@@ -116,6 +194,11 @@ public class Menu extends Panel {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gravisim3d.ui.ADrawable#drawSiblings(processing.core.PGraphics)
+	 */
 	@Override
 	protected void drawSiblings(PGraphics graphics) {
 		super.drawSiblings(graphics);
@@ -125,30 +208,57 @@ public class Menu extends Panel {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gravisim3d.ui.ADrawable#setSize(double, double, double)
+	 */
 	@Override
 	public void setSize(double size_x, double size_y, double size_z) {
 		super.setSize(0.0, 0.0, 1.0);
 		arrangeButtons();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gravisim3d.ui.ADrawable#setPos(double, double, double)
+	 */
 	@Override
 	public void setPos(double x, double y, double z) {
 		super.setPos(x, y, z);
 		arrangeButtons();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.gravisim3d.ui.ADrawable#setHorizontalAlignment(com.gravisim3d.ui.
+	 * EHorizontalAlignment)
+	 */
 	@Override
 	public void setHorizontalAlignment(EHorizontalAlignment horizontal_alignment) {
 		super.setHorizontalAlignment(horizontal_alignment);
 		arrangeButtons();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gravisim3d.ui.ADrawable#setVerticalAlignment(com.gravisim3d.ui.
+	 * EVerticalAlignment)
+	 */
 	@Override
 	public void setVerticalAlignment(EVerticalAlignment vertical_alignment) {
 		super.setVerticalAlignment(vertical_alignment);
 		arrangeButtons();
 	}
 
+	/**
+	 * @param text
+	 * @return
+	 */
 	public Button createMenuItem(String text) {
 		Button ret = new Button(text, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0,
 				(getHorizontalAlignment() == EHorizontalAlignment.CENTER) ? EHorizontalAlignment.LEFT
@@ -160,20 +270,34 @@ public class Menu extends Panel {
 		return ret;
 	}
 
+	/**
+	 * @param button_size
+	 */
 	public void setButtonSize(double button_size) {
 		this.button_size = button_size;
 		arrangeButtons();
 	}
 
+	/**
+	 * @param padding
+	 */
 	public void setPadding(double padding) {
 		this.padding = padding;
 		setButtonSize(button_size);
 	}
 
+	/**
+	 * @return
+	 */
 	public List<Button> getButtons() {
 		return buttons;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gravisim3d.ui.ADrawable#dispose()
+	 */
 	@Override
 	public void dispose() {
 		super.dispose();

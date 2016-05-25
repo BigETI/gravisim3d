@@ -6,14 +6,49 @@ import com.gravisim3d.core.PVectorD;
 import processing.core.PFont;
 import processing.core.PGraphics;
 
+/**
+ * Drawable text class
+ * 
+ * @author Ethem Kurt
+ *
+ */
 public class Text extends ADrawable {
 
+	/**
+	 * Text
+	 */
 	private String text;
 
+	/**
+	 * Text size
+	 */
 	private double text_size;
 
+	/**
+	 * Font
+	 */
 	private PFont font;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param text
+	 *            Text
+	 * @param x
+	 *            X
+	 * @param y
+	 *            Y
+	 * @param z
+	 *            Z
+	 * @param text_size
+	 *            Text size
+	 * @param horizontal_alignment
+	 *            Horizontal alignment
+	 * @param vertical_alignment
+	 *            Vertical alignment
+	 * @param color
+	 *            COlor
+	 */
 	public Text(String text, double x, double y, double z, double text_size, EHorizontalAlignment horizontal_alignment,
 			EVerticalAlignment vertical_alignment, int color) {
 		super(x, y, z, 1.0, 1.0, 1.0, horizontal_alignment, vertical_alignment, color);
@@ -22,6 +57,12 @@ public class Text extends ADrawable {
 		setFont("Ubuntu-C");
 	}
 
+	/**
+	 * Set text
+	 * 
+	 * @param text
+	 *            Text
+	 */
 	public void setText(String text) {
 		if (text == null)
 			this.text = "";
@@ -29,11 +70,22 @@ public class Text extends ADrawable {
 			this.text = text;
 		updateSizeFromText();
 	}
-	
+
+	/**
+	 * Set font by name
+	 * 
+	 * @param font_name
+	 *            Font by name
+	 */
 	public void setFont(String font_name) {
 		font = FontLoader.get(font_name);
 	}
-	
+
+	/**
+	 * Get font
+	 * 
+	 * @return Font
+	 */
 	public PFont getFont() {
 		return font;
 	}
@@ -43,6 +95,9 @@ public class Text extends ADrawable {
 	 * //super }
 	 */
 
+	/**
+	 * Update size from text
+	 */
 	private void updateSizeFromText() {
 		PVectorD new_size;
 		int col = 0, row = 1, curr_col = 0;
@@ -62,15 +117,31 @@ public class Text extends ADrawable {
 		setSize(new_size.x, new_size.y, new_size.z);
 	}
 
+	/**
+	 * Set text size
+	 * 
+	 * @param text_size
+	 *            Text size
+	 */
 	public void setTextSize(double text_size) {
 		this.text_size = text_size;
 		updateSizeFromText();
 	}
 
+	/**
+	 * Get text size
+	 * 
+	 * @return Text size
+	 */
 	public double getTextSize() {
 		return text_size;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gravisim3d.ui.ADrawable#draw(processing.core.PGraphics)
+	 */
 	@Override
 	protected void draw(PGraphics graphics) {
 		graphics.pushMatrix();

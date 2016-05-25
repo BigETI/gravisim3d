@@ -2,7 +2,6 @@ package com.gravisim3d.ui;
 
 import java.util.Random;
 import java.lang.Math;
-import com.gravisim3d.core.FontLoader;
 import com.gravisim3d.core.PVectorD;
 import com.gravisim3d.event.ClickEventArgs;
 import com.gravisim3d.event.IClickListener;
@@ -12,62 +11,150 @@ import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.event.MouseEvent;
 
+/**
+ * GraviSim3D main class
+ * 
+ * @author Ethem Kurt
+ *
+ */
 public class GraviSim3D extends PApplet {
 
+	/**
+	 * Applet
+	 */
 	private static GraviSim3D applet;
 
-	// UI
+	/**
+	 * Background Scene
+	 */
 	private UI bg;
+
+	/**
+	 * Universe Scene
+	 */
 	private Universe3D universe;
+
+	/**
+	 * UI
+	 */
 	private UI ui;
 
+	/**
+	 * Zoom text
+	 */
 	private Text zoom_text;
-	private Menu menu;
+
+	/**
+	 * Main menu
+	 */
+	private Menu main_menu;
+
+	/**
+	 * Actions menu
+	 */
 	private Menu actions_menu;
+
+	/**
+	 * Mode menu
+	 */
 	private Menu mode_menu;
-	private Button menu_button;
-	private Button[] action_menu_item = new Button[EGraviSim3DAction.values().length];
+
+	/**
+	 * Main menu button
+	 */
+	private Button main_menu_button;
+
+	/**
+	 * Action menu items
+	 */
+	private Button[] action_menu_items = new Button[EGraviSim3DAction.values().length];
 
 	// Hint controller
 	private HintController hint_controller;
 
+	/**
+	 * Random generator
+	 */
 	private Random rand = new Random();
 
+	/**
+	 * Planet grow position
+	 */
 	private PVectorD grow_pos = null;
 
+	/**
+	 * Planet growing scale
+	 */
 	private double growing = 0.0;
 
+	/**
+	 * Growing planet color
+	 */
 	private int grow_color;
 
-	private double volume_factor = (4.0 / 3.0) * Math.PI;
+	/**
+	 * Volume factor
+	 */
+	public static final double VOLUME_FACTOR = (4.0 / 3.0) * Math.PI;
 
 	// private PVector modify_rotation_point;
 
+	/**
+	 * Show create planet
+	 */
 	private boolean show_create_planet = false;
 
+	/**
+	 * Show prediction
+	 */
 	private boolean show_prediction = false;
 
+	/**
+	 * Show effecting lines
+	 */
 	private boolean show_effecting_lines = false;
 
-	private EGraviSim3DAction mode = EGraviSim3DAction.CREATE_PLANET;
+	/**
+	 * GraviSIm3D action
+	 */
+	private EGraviSim3DAction action = EGraviSim3DAction.CREATE_PLANET;
 
-	// private PGraphics temporary_graphics;
-
+	/**
+	 * Main entry point
+	 * 
+	 * @param args
+	 *            Command line arguments
+	 */
 	public static void main(String[] args) {
 		applet = new GraviSim3D();
 		applet.runSketch(args);
 	}
 
+	/**
+	 * Get current applet instance
+	 * 
+	 * @return
+	 */
 	public static GraviSim3D getApplet() {
 		return applet;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see processing.core.PApplet#settings()
+	 */
 	@Override
 	public void settings() {
 		super.settings();
 		fullScreen(P3D);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see processing.core.PApplet#setup()
+	 */
 	@Override
 	public void setup() {
 		super.setup();
@@ -80,11 +167,25 @@ public class GraviSim3D extends PApplet {
 		universe = new Universe3D(constraint.x, constraint.y, 10.0);
 		universe.getDrawableNotifier().addListener(new IDrawableListener() {
 
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * com.gravisim3d.event.IDrawableListener#onDrawComponent(processing
+			 * .core.PGraphics)
+			 */
 			@Override
 			public void onDrawComponent(PGraphics graphics) {
 				//
 			}
 
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * com.gravisim3d.event.IDrawableListener#onDrawSiblings(processing.
+			 * core.PGraphics)
+			 */
 			@Override
 			public void onDrawSiblings(PGraphics graphics) {
 				if (show_prediction || show_effecting_lines) {
@@ -135,7 +236,7 @@ public class GraviSim3D extends PApplet {
 							-((mouseX - grow_pos.x - universe.getPos().x) / universe.getZoom()),
 							-((mouseY - grow_pos.y - universe.getPos().y) / universe.getZoom()), 0.0);
 					Planet3D p = new Planet3D(grow_pos.x, grow_pos.y, grow_pos.z, growing,
-							volume_factor * growing * growing * growing, velocity.x, velocity.z, velocity.z,
+							VOLUME_FACTOR * growing * growing * growing, velocity.x, velocity.z, velocity.z,
 							grow_color);
 					p.drawPrediction(graphics, universe.getPhysicalObjects(), universe.getGravitationalConstant());
 					p.drawComponent(graphics, universe.getSize());
@@ -149,74 +250,116 @@ public class GraviSim3D extends PApplet {
 		zoom_text = new Text("", 20.0, 20.0, 0.0, 12.0, EHorizontalAlignment.LEFT, EVerticalAlignment.TOP, 0xFFFFFF00);
 		// ui.addDrawable(universe);
 		ui.addDrawable(zoom_text);
-		menu_button = new Button("Menu", 0.0, 0.0, 0.0, 100.0, 40.0, 1.0, EHorizontalAlignment.RIGHT,
+		main_menu_button = new Button("Menu", 0.0, 0.0, 0.0, 100.0, 40.0, 1.0, EHorizontalAlignment.RIGHT,
 				EVerticalAlignment.TOP, 0x7F3F3FFF, 0xFF3F3FFF, 0xFF7F7FFF, 0x7FFF3F3F);
-		menu_button.setHint("Show menu");
-		menu_button.getCaption().setPos(35.0, 0.0, 0.1);
-		menu_button.getCaption().setTextSize(20.0);
-		menu_button.addDrawable(new ImageBox("Titros_icon.png", 5.0, 0.0, 1.0, 24.0, 24.0, 1.0,
+		main_menu_button.setHint("Show menu");
+		main_menu_button.getCaption().setPos(35.0, 0.0, 0.1);
+		main_menu_button.getCaption().setTextSize(20.0);
+		main_menu_button.addDrawable(new ImageBox("Titros_icon.png", 5.0, 0.0, 1.0, 24.0, 24.0, 1.0,
 				EHorizontalAlignment.LEFT, EVerticalAlignment.CENTER));
 
 		// menu_button.addDrawable(new Button(20.0, 0.0, 0.0, 100.0, 40.0, 1.0,
 		// EHorizontalAlignment.LEFT, EVerticalAlignment.TOP, 0x7F3F3FFF,
 		// 0xFF3F3FFF, 0xFF7F7FFF));
-		menu_button.getClickNotifier().addListener(new IClickListener() {
+		main_menu_button.getClickNotifier().addListener(new IClickListener() {
 
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * com.gravisim3d.event.IClickListener#onClick(com.gravisim3d.event.
+			 * ClickEventArgs)
+			 */
 			@Override
 			public void onClick(ClickEventArgs args) {
-				menu.setVisible(!menu.isVisible());
-				menu_button.setGlowing(menu.isVisible());
+				main_menu.setVisible(!main_menu.isVisible());
+				main_menu_button.setGlowing(main_menu.isVisible());
 			}
 
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * com.gravisim3d.event.IClickListener#onPress(com.gravisim3d.event.
+			 * ClickEventArgs)
+			 */
 			@Override
 			public void onPress(ClickEventArgs args) {
 				// System.out.println("press");
 			}
 
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * com.gravisim3d.event.IClickListener#onRelease(com.gravisim3d.
+			 * event.ClickEventArgs)
+			 */
 			@Override
 			public void onRelease(ClickEventArgs args) {
 				// System.out.println("release");
 			}
 		});
-		ui.addDrawable(menu_button);
+		ui.addDrawable(main_menu_button);
 
-		menu = new Menu(0.0, 40.0, 0.0, 150.0, 40.0, EHorizontalAlignment.RIGHT, EVerticalAlignment.TOP, 0x3F3F3F7F,
-				0x7F3F3FFF, 0xFF3F3FFF, 0xFF7F7FFF, 0x7FFF3F3F, EMenuAlignment.VERTICAL);
-		menu.setHint("This is the main menu.");
-		settings_menu_item = menu.createMenuItem("Settings");
+		main_menu = new Menu(0.0, 40.0, 0.0, 150.0, 40.0, EHorizontalAlignment.RIGHT, EVerticalAlignment.TOP,
+				0x3F3F3F7F, 0x7F3F3FFF, 0xFF3F3FFF, 0xFF7F7FFF, 0x7FFF3F3F, EMenuAlignment.VERTICAL);
+		main_menu.setHint("This is the main menu.");
+		settings_menu_item = main_menu.createMenuItem("Settings");
 		settings_menu_item.setHint("Show settings.\n\nThere are no settings yet.");
-		about_menu_item = menu.createMenuItem("About");
+		about_menu_item = main_menu.createMenuItem("About");
 		about_menu_item.setHint("Show about.\n\nThere is no function yet.");
-		exit_menu_item = menu.createMenuItem("Exit");
+		exit_menu_item = main_menu.createMenuItem("Exit");
 		exit_menu_item.setHint("Close this simulation.");
 		exit_menu_item.getClickNotifier().addListener(new IClickListener() {
 
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * com.gravisim3d.event.IClickListener#onClick(com.gravisim3d.event.
+			 * ClickEventArgs)
+			 */
 			@Override
 			public void onClick(ClickEventArgs args) {
 				exit();
 			}
 
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * com.gravisim3d.event.IClickListener#onPress(com.gravisim3d.event.
+			 * ClickEventArgs)
+			 */
 			@Override
 			public void onPress(ClickEventArgs args) {
 				//
 			}
 
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * com.gravisim3d.event.IClickListener#onRelease(com.gravisim3d.
+			 * event.ClickEventArgs)
+			 */
 			@Override
 			public void onRelease(ClickEventArgs args) {
 				//
 
 			}
 		});
-		menu.setVisible(false);
+		main_menu.setVisible(false);
 
-		ui.addDrawable(menu);
+		ui.addDrawable(main_menu);
 
 		actions_menu = new Menu(0.0, 0.0, 0.0, 50.0, 40.0, EHorizontalAlignment.CENTER, EVerticalAlignment.BOTTOM,
 				0x3F3F3F7F, 0x7F3F3FFF, 0xFF3F3FFF, 0xFF7F7FFF, 0x7FFF3F3F, EMenuAlignment.HORIZONTAL);
 		actions_menu.setHint("This is the action menu.\n\nSelect any action you want to execute.");
 		EGraviSim3DAction[] vals = EGraviSim3DAction.values();
 		for (int i = 0; i < vals.length; i++)
-			action_menu_item[i] = vals[i].createMenuItem(actions_menu);
+			action_menu_items[i] = vals[i].createMenuItem(actions_menu);
 		Planet3D planet1 = new Planet3D(0.0, 0.0, 0.0, 8.0, 0.0, 0.0, 0.0, 0.0, 0xFFFFFF3F);
 		planet1.setHorizontalAlignment(EHorizontalAlignment.CENTER);
 		planet1.setVerticalAlignment(EVerticalAlignment.CENTER);
@@ -225,88 +368,163 @@ public class GraviSim3D extends PApplet {
 		planet2.setVerticalAlignment(EVerticalAlignment.CENTER);
 		planet1.addDrawable(planet2);
 		int cp_id = EGraviSim3DAction.CREATE_PLANET.compareTo(EGraviSim3DAction.CREATE_PLANET);
-		action_menu_item[cp_id].addDrawable(planet1);
-		action_menu_item[cp_id].getClickNotifier().addListener(new IClickListener() {
+		action_menu_items[cp_id].addDrawable(planet1);
+		action_menu_items[cp_id].getClickNotifier().addListener(new IClickListener() {
 
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * com.gravisim3d.event.IClickListener#onClick(com.gravisim3d.event.
+			 * ClickEventArgs)
+			 */
 			@Override
 			public void onClick(ClickEventArgs args) {
 				unglowActionsMenu();
-				action_menu_item[EGraviSim3DAction.CREATE_PLANET.compareTo(EGraviSim3DAction.CREATE_PLANET)]
+				action_menu_items[EGraviSim3DAction.CREATE_PLANET.compareTo(EGraviSim3DAction.CREATE_PLANET)]
 						.setGlowing(true);
-				mode = EGraviSim3DAction.CREATE_PLANET;
+				action = EGraviSim3DAction.CREATE_PLANET;
 			}
 
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * com.gravisim3d.event.IClickListener#onPress(com.gravisim3d.event.
+			 * ClickEventArgs)
+			 */
 			@Override
 			public void onPress(ClickEventArgs args) {
 				//
 			}
 
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * com.gravisim3d.event.IClickListener#onRelease(com.gravisim3d.
+			 * event.ClickEventArgs)
+			 */
 			@Override
 			public void onRelease(ClickEventArgs args) {
 				//
 
 			}
 		});
-		action_menu_item[EGraviSim3DAction.SELECT_PLANET.compareTo(EGraviSim3DAction.CREATE_PLANET)].getClickNotifier()
+		action_menu_items[EGraviSim3DAction.SELECT_PLANET.compareTo(EGraviSim3DAction.CREATE_PLANET)].getClickNotifier()
 				.addListener(new IClickListener() {
 
+					/*
+					 * (non-Javadoc)
+					 * 
+					 * @see com.gravisim3d.event.IClickListener#onClick(com.
+					 * gravisim3d.event.ClickEventArgs)
+					 */
 					@Override
 					public void onClick(ClickEventArgs args) {
 						unglowActionsMenu();
-						action_menu_item[EGraviSim3DAction.SELECT_PLANET.compareTo(EGraviSim3DAction.CREATE_PLANET)]
+						action_menu_items[EGraviSim3DAction.SELECT_PLANET.compareTo(EGraviSim3DAction.CREATE_PLANET)]
 								.setGlowing(true);
-						mode = EGraviSim3DAction.SELECT_PLANET;
+						action = EGraviSim3DAction.SELECT_PLANET;
 					}
 
+					/*
+					 * (non-Javadoc)
+					 * 
+					 * @see com.gravisim3d.event.IClickListener#onPress(com.
+					 * gravisim3d.event.ClickEventArgs)
+					 */
 					@Override
 					public void onPress(ClickEventArgs args) {
 						//
 					}
 
+					/*
+					 * (non-Javadoc)
+					 * 
+					 * @see com.gravisim3d.event.IClickListener#onRelease(com.
+					 * gravisim3d.event.ClickEventArgs)
+					 */
 					@Override
 					public void onRelease(ClickEventArgs args) {
 						//
 
 					}
 				});
-		action_menu_item[EGraviSim3DAction.ROTATE_CAMERA.compareTo(EGraviSim3DAction.CREATE_PLANET)].getClickNotifier()
+		action_menu_items[EGraviSim3DAction.ROTATE_CAMERA.compareTo(EGraviSim3DAction.CREATE_PLANET)].getClickNotifier()
 				.addListener(new IClickListener() {
 
+					/*
+					 * (non-Javadoc)
+					 * 
+					 * @see com.gravisim3d.event.IClickListener#onClick(com.
+					 * gravisim3d.event.ClickEventArgs)
+					 */
 					@Override
 					public void onClick(ClickEventArgs args) {
 						unglowActionsMenu();
-						action_menu_item[EGraviSim3DAction.ROTATE_CAMERA.compareTo(EGraviSim3DAction.CREATE_PLANET)]
+						action_menu_items[EGraviSim3DAction.ROTATE_CAMERA.compareTo(EGraviSim3DAction.CREATE_PLANET)]
 								.setGlowing(true);
-						mode = EGraviSim3DAction.ROTATE_CAMERA;
+						action = EGraviSim3DAction.ROTATE_CAMERA;
 					}
 
+					/*
+					 * (non-Javadoc)
+					 * 
+					 * @see com.gravisim3d.event.IClickListener#onPress(com.
+					 * gravisim3d.event.ClickEventArgs)
+					 */
 					@Override
 					public void onPress(ClickEventArgs args) {
 						//
 					}
 
+					/*
+					 * (non-Javadoc)
+					 * 
+					 * @see com.gravisim3d.event.IClickListener#onRelease(com.
+					 * gravisim3d.event.ClickEventArgs)
+					 */
 					@Override
 					public void onRelease(ClickEventArgs args) {
 						//
 
 					}
 				});
-		action_menu_item[EGraviSim3DAction.TRANSLATE_CAMERA.compareTo(EGraviSim3DAction.CREATE_PLANET)]
+		action_menu_items[EGraviSim3DAction.TRANSLATE_CAMERA.compareTo(EGraviSim3DAction.CREATE_PLANET)]
 				.getClickNotifier().addListener(new IClickListener() {
 
+					/*
+					 * (non-Javadoc)
+					 * 
+					 * @see com.gravisim3d.event.IClickListener#onClick(com.
+					 * gravisim3d.event.ClickEventArgs)
+					 */
 					@Override
 					public void onClick(ClickEventArgs args) {
 						unglowActionsMenu();
-						action_menu_item[EGraviSim3DAction.TRANSLATE_CAMERA.compareTo(EGraviSim3DAction.CREATE_PLANET)]
+						action_menu_items[EGraviSim3DAction.TRANSLATE_CAMERA.compareTo(EGraviSim3DAction.CREATE_PLANET)]
 								.setGlowing(true);
-						mode = EGraviSim3DAction.TRANSLATE_CAMERA;
+						action = EGraviSim3DAction.TRANSLATE_CAMERA;
 					}
 
+					/*
+					 * (non-Javadoc)
+					 * 
+					 * @see com.gravisim3d.event.IClickListener#onPress(com.
+					 * gravisim3d.event.ClickEventArgs)
+					 */
 					@Override
 					public void onPress(ClickEventArgs args) {
 						//
 					}
 
+					/*
+					 * (non-Javadoc)
+					 * 
+					 * @see com.gravisim3d.event.IClickListener#onRelease(com.
+					 * gravisim3d.event.ClickEventArgs)
+					 */
 					@Override
 					public void onRelease(ClickEventArgs args) {
 						//
@@ -348,6 +566,11 @@ public class GraviSim3D extends PApplet {
 		createRandomStars();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see processing.core.PApplet#mousePressed()
+	 */
 	@Override
 	public void mousePressed() {
 		super.mousePressed();
@@ -355,6 +578,11 @@ public class GraviSim3D extends PApplet {
 		// mouseY), new PVector(0.0, 0.0), rand.nextInt() | 0xFF000000));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see processing.core.PApplet#mouseWheel(processing.event.MouseEvent)
+	 */
 	@Override
 	public void mouseWheel(MouseEvent event) {
 		super.mouseWheel(event);
@@ -370,6 +598,11 @@ public class GraviSim3D extends PApplet {
 		// System.out.println("" + universe.scale);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see processing.core.PApplet#keyPressed()
+	 */
 	@Override
 	public void keyPressed() {
 		super.keyPressed();
@@ -396,13 +629,16 @@ public class GraviSim3D extends PApplet {
 		}
 	}
 
-	void createPlanetFromCursor() {
+	/**
+	 * Create planet from cursor
+	 */
+	private void createPlanetFromCursor() {
 		PVectorD display_pos = new PVectorD(grow_pos.x * universe.getZoom(), grow_pos.y * universe.getZoom(),
 				grow_pos.z * universe.getZoom());
 		PVectorD velocity = new PVectorD(-((mouseX - display_pos.x - universe.getPos().x) / universe.getZoom()),
 				-((mouseY - display_pos.y - universe.getPos().y) / universe.getZoom()), 0.0);
 		Planet3D p = new Planet3D(grow_pos.x, grow_pos.y, grow_pos.z, growing,
-				volume_factor * growing * growing * growing, velocity.x, velocity.y, velocity.z, grow_color);
+				VOLUME_FACTOR * growing * growing * growing, velocity.x, velocity.y, velocity.z, grow_color);
 		p.setHint("I am a planet!");
 		universe.addPhysicalObject(p);
 
@@ -411,6 +647,11 @@ public class GraviSim3D extends PApplet {
 		show_create_planet = false;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see processing.core.PApplet#draw()
+	 */
 	@Override
 	public void draw() {
 		super.draw();
@@ -440,7 +681,7 @@ public class GraviSim3D extends PApplet {
 		if (mousePressed) {
 			switch (mouseButton) {
 			case RIGHT:
-				switch (mode) {
+				switch (action) {
 				case CREATE_PLANET:
 					if (grow_pos == null) {
 						grow_pos = new PVectorD((mouseX - universe.getPos().x) / universe.getZoom(),
@@ -461,7 +702,7 @@ public class GraviSim3D extends PApplet {
 			case LEFT:
 				if (grow_pos != null)
 					createPlanetFromCursor();
-				switch (mode) {
+				switch (action) {
 				case CREATE_PLANET:
 					break;
 				case SELECT_PLANET:
@@ -496,6 +737,9 @@ public class GraviSim3D extends PApplet {
 		ui.drawMain();
 	}
 
+	/**
+	 * Create random stars for background
+	 */
 	private void createRandomStars() {
 		int brightnes;
 		int c;
@@ -511,11 +755,19 @@ public class GraviSim3D extends PApplet {
 		}
 	}
 
+	/**
+	 * Unglow all menu items in the action menu
+	 */
 	private void unglowActionsMenu() {
 		for (Button i : actions_menu.getButtons())
 			i.setGlowing(false);
 	}
 
+	/**
+	 * Get hint controller
+	 * 
+	 * @return Hint controller
+	 */
 	public HintController getHintController() {
 		return hint_controller;
 	}

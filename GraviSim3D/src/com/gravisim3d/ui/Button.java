@@ -6,22 +6,79 @@ import com.gravisim3d.event.ClickNotifier;
 
 import processing.core.PGraphics;
 
+/**
+ * Drawable button class
+ * 
+ * @author Ethem Kurt
+ *
+ */
 public class Button extends Panel {
 
+	/**
+	 * Hover color
+	 */
 	private int hover_color;
 
+	/**
+	 * Click color
+	 */
 	private int click_color;
 
+	/**
+	 * Glow color
+	 */
 	private int glow_color;
 
+	/**
+	 * Glowing
+	 */
 	private boolean glowing = false;
 
+	/**
+	 * Pressing
+	 */
 	private boolean pressing = false;
 
+	/**
+	 * Caption
+	 */
 	private Text caption;
 
+	/**
+	 * Click notifier
+	 */
 	private ClickNotifier click_notifier = new ClickNotifier();
 
+	/**
+	 * Constructor
+	 * 
+	 * @param caption
+	 *            Caption
+	 * @param x
+	 *            X
+	 * @param y
+	 *            Y
+	 * @param z
+	 *            Z
+	 * @param size_x
+	 *            Size X
+	 * @param size_y
+	 *            Size Y
+	 * @param size_z
+	 *            Size Z
+	 * @param horizontal_alignment
+	 *            Horizontal alignment
+	 * @param vertical_alignment
+	 *            Vertical alignment
+	 * @param color
+	 *            Color
+	 * @param hover_color
+	 *            Hover color
+	 * @param click_color
+	 *            Click color
+	 * @param glow_color
+	 *            Glow color
+	 */
 	public Button(String caption, double x, double y, double z, double size_x, double size_y, double size_z,
 			EHorizontalAlignment horizontal_alignment, EVerticalAlignment vertical_alignment, int color,
 			int hover_color, int click_color, int glow_color) {
@@ -33,6 +90,12 @@ public class Button extends Panel {
 				0xFFFFFFFF);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gravisim3d.ui.ADrawable#processInput(double, double, boolean,
+	 * com.gravisim3d.core.PVectorD)
+	 */
 	@Override
 	public void processInput(double pos_x, double pos_y, boolean pressed, PVectorD constraint) {
 		super.processInput(pos_x, pos_y, pressed, constraint);
@@ -73,28 +136,59 @@ public class Button extends Panel {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gravisim3d.ui.ADrawable#drawSiblings(processing.core.PGraphics)
+	 */
 	@Override
 	protected void drawSiblings(PGraphics graphics) {
 		super.drawSiblings(graphics);
 		caption.drawComponent(graphics, getSize());
 	}
 
+	/**
+	 * Get click notifier
+	 * 
+	 * @return Click notifier
+	 */
 	public ClickNotifier getClickNotifier() {
 		return click_notifier;
 	}
 
+	/**
+	 * Get caption
+	 * 
+	 * @return Caption
+	 */
 	public Text getCaption() {
 		return caption;
 	}
 
+	/**
+	 * Set glowing
+	 * 
+	 * @param glowing
+	 *            Glowing
+	 */
 	public void setGlowing(boolean glowing) {
 		this.glowing = glowing;
 	}
 
-	public boolean getGlowing() {
+	/**
+	 * Is glowing
+	 * 
+	 * @return Glowing
+	 */
+	public boolean isGlowing() {
 		return glowing;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gravisim3d.ui.Panel#draw(processing.core.PGraphics)
+	 */
 	@Override
 	protected void draw(PGraphics graphics) {
 		if (pressing)
@@ -106,6 +200,11 @@ public class Button extends Panel {
 		super.draw(graphics);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gravisim3d.ui.ADrawable#dispose()
+	 */
 	@Override
 	public void dispose() {
 		super.dispose();

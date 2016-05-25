@@ -6,40 +6,89 @@ import java.util.LinkedList;
 
 import processing.core.PGraphics;
 
+/**
+ * Drawable hint controller class
+ * 
+ * @author Ethem Kurt
+ *
+ */
 public class HintController extends Panel {
 
+	/**
+	 * Padding
+	 */
 	private double padding = 10.0;
 
+	/**
+	 * Hint alignment
+	 */
 	private EHintAlignment hint_alignment = EHintAlignment.TOP_LEFT;
 
+	/**
+	 * Drawables with hint
+	 */
 	private LinkedHashSet<ADrawable> drawables = new LinkedHashSet<ADrawable>();
 
+	/**
+	 * Default constructor
+	 */
 	public HintController() {
 		super(0.0, 0.0, 0.0, 0.0, 0.0, 200.0, EHorizontalAlignment.LEFT, EVerticalAlignment.TOP, 0x00FFFFFF);
 	}
 
+	/**
+	 * Add drawable with hint
+	 * 
+	 * @param drawable
+	 */
 	public void addDrawableHint(ADrawable drawable) {
 		if (!drawables.contains(drawable))
 			drawables.add(drawable);
 	}
 
+	/**
+	 * Remove drawable with hint
+	 * 
+	 * @param drawable
+	 *            Drawable with hint
+	 */
 	public void removeDrawableHint(ADrawable drawable) {
 		if (drawables.contains(drawable))
 			drawables.remove(drawable);
 	}
 
+	/**
+	 * Remove all drawables with hint
+	 */
 	public void removeDrawableHints() {
 		drawables.clear();
 	}
 
+	/**
+	 * Set padding
+	 * 
+	 * @param padding
+	 *            Padding
+	 */
 	public void setPadding(float padding) {
 		this.padding = padding;
 	}
 
+	/**
+	 * Get padding
+	 * 
+	 * @return Padding
+	 */
 	public double getPadding() {
 		return padding;
 	}
 
+	/**
+	 * Update hint alignment
+	 * 
+	 * @param hint_alignment
+	 *            Hint alignment
+	 */
 	private void updateAlignment(EHintAlignment hint_alignment) {
 		Hint hint;
 		// if (this.hint_alignment != hint_alignment) {
@@ -54,6 +103,11 @@ public class HintController extends Panel {
 		// }
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gravisim3d.ui.ADrawable#drawSiblings(processing.core.PGraphics)
+	 */
 	@Override
 	protected void drawSiblings(PGraphics graphics) {
 		super.drawSiblings(graphics);
@@ -90,6 +144,11 @@ public class HintController extends Panel {
 		graphics.popMatrix();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gravisim3d.ui.ADrawable#dispose()
+	 */
 	@Override
 	public void dispose() {
 		super.dispose();

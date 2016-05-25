@@ -4,12 +4,50 @@ import java.util.List;
 
 import com.gravisim3d.core.PVectorD;
 
+/**
+ * Physical object class
+ * 
+ * @author Ethem Kurt
+ *
+ */
 public abstract class APhysical extends ADrawable {
 
+	/**
+	 * Mass
+	 */
 	private double mass;
 
+	/**
+	 * Velocity
+	 */
 	private PVectorD velocity;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param x
+	 *            X
+	 * @param y
+	 *            Y
+	 * @param z
+	 *            Z
+	 * @param size_x
+	 *            Size X
+	 * @param size_y
+	 *            Size Y
+	 * @param size_z
+	 *            SIze Z
+	 * @param mass
+	 *            Mass
+	 * @param velocity_x
+	 *            Velocity X
+	 * @param velocity_y
+	 *            Velocity Y
+	 * @param velocity_z
+	 *            Velocity Z
+	 * @param color
+	 *            Color
+	 */
 	public APhysical(double x, double y, double z, double size_x, double size_y, double size_z, double mass,
 			double velocity_x, double velocity_y, double velocity_z, int color) {
 		super(x, y, z, size_x, size_y, size_z, EHorizontalAlignment.LEFT, EVerticalAlignment.TOP, color);
@@ -17,6 +55,21 @@ public abstract class APhysical extends ADrawable {
 		setVelocity(velocity_x, velocity_y, velocity_z);
 	}
 
+	/**
+	 * Emulate physics
+	 * 
+	 * @param arbitary_pos
+	 *            Arbitary position
+	 * @param arbitary_velocity
+	 *            Arbitary velocity
+	 * @param physical_objects
+	 *            Physical objects to interact with
+	 * @param delta_millis
+	 *            Delta milliseconds
+	 * @param gravitational_constant
+	 *            Gravitational constant
+	 * @return Computed position and velocity
+	 */
 	public Rectangle<PVectorD> emulatePhysics(PVectorD arbitary_pos, PVectorD arbitary_velocity,
 			List<APhysical> physical_objects, long delta_millis, double gravitational_constant) {
 		PVectorD new_pos = new PVectorD(arbitary_pos.x + (arbitary_velocity.x * ((double) delta_millis) * 0.001),
@@ -46,6 +99,16 @@ public abstract class APhysical extends ADrawable {
 		return new Rectangle<PVectorD>(new_pos, arbitary_velocity);
 	}
 
+	/**
+	 * Apply physics
+	 * 
+	 * @param physical_objects
+	 *            Physical objects to interact with
+	 * @param delta_millis
+	 *            Delta milliseconds
+	 * @param gravitational_constant
+	 *            Gravitational constant
+	 */
 	public void applyPhysics(List<APhysical> physical_objects, long delta_millis, double gravitational_constant) {
 		Rectangle<PVectorD> pos_velocity = emulatePhysics(getPos(), velocity, physical_objects, delta_millis,
 				gravitational_constant);
@@ -53,18 +116,43 @@ public abstract class APhysical extends ADrawable {
 		velocity = pos_velocity.getY();
 	}
 
+	/**
+	 * Set mass
+	 * 
+	 * @param mass
+	 */
 	public void setMass(double mass) {
 		this.mass = mass;
 	}
 
+	/**
+	 * Get mass
+	 * 
+	 * @return Mass
+	 */
 	public double getMass() {
 		return mass;
 	}
 
+	/**
+	 * Set velocity
+	 * 
+	 * @param velocity_x
+	 *            Velocity X
+	 * @param velocity_y
+	 *            Velocity Y
+	 * @param velocity_z
+	 *            Velocity Z
+	 */
 	public void setVelocity(double velocity_x, double velocity_y, double velocity_z) {
 		velocity = new PVectorD(velocity_x, velocity_y, velocity_z);
 	}
 
+	/**
+	 * Get velocity
+	 * 
+	 * @return Velocity
+	 */
 	public PVectorD getVelocity() {
 		return velocity;
 	}
