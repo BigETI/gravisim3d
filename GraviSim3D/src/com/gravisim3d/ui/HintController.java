@@ -57,13 +57,13 @@ public class HintController extends Panel {
 	@Override
 	protected void drawSiblings(PGraphics graphics) {
 		super.drawSiblings(graphics);
-		if ((getApplet().pixelWidth / 2) >= getApplet().mouseX) {
-			if ((getApplet().pixelHeight / 2) >= getApplet().mouseY)
+		if ((GraviSim3D.getApplet().pixelWidth / 2) >= GraviSim3D.getApplet().mouseX) {
+			if ((GraviSim3D.getApplet().pixelHeight / 2) >= GraviSim3D.getApplet().mouseY)
 				updateAlignment(EHintAlignment.TOP_LEFT);
 			else
 				updateAlignment(EHintAlignment.BOTTOM_LEFT);
 		} else {
-			if ((getApplet().pixelHeight / 2) >= getApplet().mouseY)
+			if ((GraviSim3D.getApplet().pixelHeight / 2) >= GraviSim3D.getApplet().mouseY)
 				updateAlignment(EHintAlignment.TOP_RIGHT);
 			else
 				updateAlignment(EHintAlignment.BOTTOM_RIGHT);

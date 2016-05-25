@@ -10,7 +10,7 @@ public class ImageBox extends Panel {
 	public ImageBox(String image_resource, double x, double y, double z, double size_x, double size_y, double size_z,
 			EHorizontalAlignment horizontal_alignment, EVerticalAlignment vertical_alignment) {
 		super(x, y, z, size_x, size_y, size_z, horizontal_alignment, vertical_alignment, 0xFF000000);
-		image = getApplet().loadImage(image_resource);
+		image = GraviSim3D.getApplet().loadImage(image_resource);
 	}
 
 	@Override

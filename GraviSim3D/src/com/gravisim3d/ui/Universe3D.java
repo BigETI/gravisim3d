@@ -19,7 +19,7 @@ public class Universe3D extends UI {
 	public Universe3D(double x, double y, double d) {
 		super(x, y);
 		allowDepthBuffer(true);
-		text_graphics = getApplet().createGraphics((int) x, (int) y);
+		text_graphics = GraviSim3D.getApplet().createGraphics((int) x, (int) y);
 		this.gravitational_constant = d;
 	}
 
@@ -60,14 +60,14 @@ public class Universe3D extends UI {
 				if (!hover_entered) {
 					hover_entered = true;
 					if (hint != null)
-						getApplet().getHintController().addDrawableHint(this);
+						GraviSim3D.getApplet().getHintController().addDrawableHint(this);
 					getHoverNotifier().setOnEnter(new HoverEventArgs(pos_x, pos_y));
 				}
 				getHoverNotifier().setOnHover(new HoverEventArgs(pos_x, pos_y));
 			} else {
 				if (hover_entered) {
 					hover_entered = false;
-					getApplet().getHintController().removeDrawableHint(this);
+					GraviSim3D.getApplet().getHintController().removeDrawableHint(this);
 					getHoverNotifier().setOnLeave(new HoverEventArgs(pos_x, pos_y));
 				}
 			}

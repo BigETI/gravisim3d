@@ -10,7 +10,7 @@ public class UI extends ADrawable {
 	public UI(double x, double y) {
 		super(0.0, 0.0, 0.0, x, y, 1.0, EHorizontalAlignment.LEFT, EVerticalAlignment.TOP, 0xFF000000);
 		allowDepthBuffer(true);
-		graphics = getApplet().createGraphics((int) x, (int) y, PApplet.P3D);
+		graphics = GraviSim3D.getApplet().createGraphics((int) x, (int) y, PApplet.P3D);
 	}
 
 	@Override
@@ -23,7 +23,7 @@ public class UI extends ADrawable {
 	}
 
 	public void drawMain() {
-		processInput(getApplet().mouseX, getApplet().mouseY, getApplet().mousePressed, getSize());
+		processInput(GraviSim3D.getApplet().mouseX, GraviSim3D.getApplet().mouseY, GraviSim3D.getApplet().mousePressed, getSize());
 		graphics.beginDraw();
 		// temporary_graphics.beginDraw();
 		graphics.background(0x00FFFFFF);
@@ -31,6 +31,6 @@ public class UI extends ADrawable {
 		drawComponent(graphics, getSize());
 		graphics.endDraw();
 		// temporary_graphics.endDraw();
-		getApplet().image(graphics, 0, 0);
+		GraviSim3D.getApplet().image(graphics, 0, 0);
 	}
 }

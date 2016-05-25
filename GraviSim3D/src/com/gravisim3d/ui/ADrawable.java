@@ -11,8 +11,6 @@ import processing.core.*;
 
 public abstract class ADrawable {
 
-	private static GraviSim3D applet = null;
-
 	private PVectorD pos;
 
 	private PVectorD size;
@@ -50,14 +48,6 @@ public abstract class ADrawable {
 		this.color = color;
 	}
 
-	public static void init(GraviSim3D applet) {
-		ADrawable.applet = applet;
-	}
-
-	public static GraviSim3D getApplet() {
-		return applet;
-	}
-
 	public boolean inBox(double pos_x, double pos_y) {
 		return ((pos_x >= 0.0) && (pos_x <= size.x) && (pos_y >= 0.0) && (pos_y <= size.y));
 	}
@@ -92,14 +82,14 @@ public abstract class ADrawable {
 				if (!hover_entered) {
 					hover_entered = true;
 					if (hint != null)
-						applet.getHintController().addDrawableHint(this);
+						GraviSim3D.getApplet().getHintController().addDrawableHint(this);
 					hover_notifier.setOnEnter(new HoverEventArgs(pos_x, pos_y));
 				}
 				hover_notifier.setOnHover(new HoverEventArgs(pos_x, pos_y));
 			} else {
 				if (hover_entered) {
 					hover_entered = false;
-					applet.getHintController().removeDrawableHint(this);
+					GraviSim3D.getApplet().getHintController().removeDrawableHint(this);
 					hover_notifier.setOnLeave(new HoverEventArgs(pos_x, pos_y));
 				}
 			}
@@ -304,7 +294,7 @@ public abstract class ADrawable {
 	public void dispose() {
 		drawables.clear();
 		hover_notifier.removeAllListeners();
-		getApplet().getHintController().removeDrawableHint(this);
+		GraviSim3D.getApplet().getHintController().removeDrawableHint(this);
 		if (hint != null) {
 			hint.dispose();
 			hint = null;

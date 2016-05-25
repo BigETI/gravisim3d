@@ -13,6 +13,9 @@ import processing.core.PGraphics;
 import processing.event.MouseEvent;
 
 public class GraviSim3D extends PApplet {
+
+	private static GraviSim3D applet;
+
 	// UI
 	private UI bg;
 	private Universe3D universe;
@@ -51,10 +54,12 @@ public class GraviSim3D extends PApplet {
 	// private PGraphics temporary_graphics;
 
 	public static void main(String[] args) {
-		GraviSim3D applet = new GraviSim3D();
-		FontLoader.init(applet);
-		ADrawable.init(applet);
+		applet = new GraviSim3D();
 		applet.runSketch(args);
+	}
+
+	public static GraviSim3D getApplet() {
+		return applet;
 	}
 
 	@Override
