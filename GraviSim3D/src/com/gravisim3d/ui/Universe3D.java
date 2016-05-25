@@ -161,6 +161,7 @@ public class Universe3D extends UI {
 	 * Add physical object
 	 * 
 	 * @param p
+	 *            Physical object
 	 */
 	public void addPhysicalObject(APhysical p) {
 		if (p != null)

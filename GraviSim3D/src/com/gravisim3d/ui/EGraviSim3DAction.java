@@ -6,7 +6,7 @@ package com.gravisim3d.ui;
  * @author Ethem Kurt
  *
  */
-public enum EGraviSim3DAction {
+public enum EGraviSim3DAction implements IMenuItem {
 
 	/**
 	 * Create planet
@@ -51,16 +51,23 @@ public enum EGraviSim3DAction {
 		this.description = description;
 	}
 
-	/**
-	 * Create menu item
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param menu
-	 *            Menu
-	 * @return Menu item
+	 * @see com.gravisim3d.ui.IMenuItem#getTitle()
 	 */
-	public Button createMenuItem(Menu menu) {
-		Button ret = menu.createMenuItem("");
-		ret.setHint(title + "\n\n" + description);
-		return ret;
+	@Override
+	public String getTitle() {
+		return title;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gravisim3d.ui.IMenuItem#getDescription()
+	 */
+	@Override
+	public String getDescription() {
+		return description;
 	}
 }

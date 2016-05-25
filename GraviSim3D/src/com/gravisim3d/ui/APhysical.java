@@ -119,7 +119,7 @@ public abstract class APhysical extends ADrawable {
 	/**
 	 * Set mass
 	 * 
-	 * @param mass
+	 * @param mass Mass
 	 */
 	public void setMass(double mass) {
 		this.mass = mass;

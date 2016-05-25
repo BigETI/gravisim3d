@@ -256,8 +256,11 @@ public class Menu extends Panel {
 	}
 
 	/**
+	 * Create menu item
+	 * 
 	 * @param text
-	 * @return
+	 *            Hint text
+	 * @return Menu item
 	 */
 	public Button createMenuItem(String text) {
 		Button ret = new Button(text, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0,
@@ -271,7 +274,10 @@ public class Menu extends Panel {
 	}
 
 	/**
+	 * Set button size
+	 * 
 	 * @param button_size
+	 *            Button size
 	 */
 	public void setButtonSize(double button_size) {
 		this.button_size = button_size;
@@ -279,7 +285,10 @@ public class Menu extends Panel {
 	}
 
 	/**
+	 * Set padding
+	 * 
 	 * @param padding
+	 *            Padding
 	 */
 	public void setPadding(double padding) {
 		this.padding = padding;
@@ -287,10 +296,28 @@ public class Menu extends Panel {
 	}
 
 	/**
-	 * @return
+	 * Get menu items
+	 * 
+	 * @return Menu items
 	 */
 	public List<Button> getButtons() {
 		return buttons;
+	}
+
+	/**
+	 * Create menu items
+	 * 
+	 * @param menu_items
+	 *            Menu items
+	 * @return Menu items
+	 */
+	public Button[] createMenuItems(IMenuItem[] menu_items) {
+		Button[] ret = new Button[menu_items.length];
+		for (int i = 0; i < menu_items.length; i++) {
+			ret[i] = createMenuItem("");
+			ret[i].setHint(menu_items[i].getTitle() + "\n\n" + menu_items[i].getDescription());
+		}
+		return ret;
 	}
 
 	/*

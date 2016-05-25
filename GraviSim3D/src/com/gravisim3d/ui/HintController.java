@@ -40,6 +40,7 @@ public class HintController extends Panel {
 	 * Add drawable with hint
 	 * 
 	 * @param drawable
+	 *            Drawable with hint
 	 */
 	public void addDrawableHint(ADrawable drawable) {
 		if (!drawables.contains(drawable))

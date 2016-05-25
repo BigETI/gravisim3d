@@ -69,6 +69,11 @@ public class GraviSim3D extends PApplet {
 	 */
 	private Button[] action_menu_items = new Button[EGraviSim3DAction.values().length];
 
+	/**
+	 * Mode menu items
+	 */
+	private Button[] mode_menu_items = new Button[EGraviSim3DMode.values().length];
+
 	// Hint controller
 	private HintController hint_controller;
 
@@ -133,7 +138,7 @@ public class GraviSim3D extends PApplet {
 	/**
 	 * Get current applet instance
 	 * 
-	 * @return
+	 * @return Current applet instance
 	 */
 	public static GraviSim3D getApplet() {
 		return applet;
@@ -357,9 +362,7 @@ public class GraviSim3D extends PApplet {
 		actions_menu = new Menu(0.0, 0.0, 0.0, 50.0, 40.0, EHorizontalAlignment.CENTER, EVerticalAlignment.BOTTOM,
 				0x3F3F3F7F, 0x7F3F3FFF, 0xFF3F3FFF, 0xFF7F7FFF, 0x7FFF3F3F, EMenuAlignment.HORIZONTAL);
 		actions_menu.setHint("This is the action menu.\n\nSelect any action you want to execute.");
-		EGraviSim3DAction[] vals = EGraviSim3DAction.values();
-		for (int i = 0; i < vals.length; i++)
-			action_menu_items[i] = vals[i].createMenuItem(actions_menu);
+		action_menu_items = actions_menu.createMenuItems(EGraviSim3DAction.values());
 		Planet3D planet1 = new Planet3D(0.0, 0.0, 0.0, 8.0, 0.0, 0.0, 0.0, 0.0, 0xFFFFFF3F);
 		planet1.setHorizontalAlignment(EHorizontalAlignment.CENTER);
 		planet1.setVerticalAlignment(EVerticalAlignment.CENTER);
@@ -549,6 +552,7 @@ public class GraviSim3D extends PApplet {
 		mode_menu = new Menu(0.0, 0.0, 0.0, 50.0, 40.0, EHorizontalAlignment.LEFT, EVerticalAlignment.CENTER,
 				0x3F3F3F7F, 0x7F3F3FFF, 0xFF3F3FFF, 0xFF7F7FFF, 0x7FFF3F3F, EMenuAlignment.VERTICAL);
 		mode_menu.setHint("This is the mode menu\n\nSelect any mode for your needs");
+		mode_menu.createMenuItems(EGraviSim3DMode.values());
 		/*
 		 * EGraviSim3DMode[] m_vals = EGraviSim3DMode.values(); for (int i = 0;
 		 * i < m_vals.length; i++) action_menu_item[i] =
