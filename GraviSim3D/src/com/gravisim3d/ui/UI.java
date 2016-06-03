@@ -19,14 +19,14 @@ public class UI extends ADrawable {
 	/**
 	 * Constructor
 	 * 
-	 * @param x
-	 *            X
-	 * @param y
-	 *            Y
+	 * @param size_x
+	 *            Size X
+	 * @param size_y
+	 *            Size Y
 	 */
-	public UI(double x, double y) {
-		super(0.0, 0.0, 0.0, x, y, 1.0, EHorizontalAlignment.LEFT, EVerticalAlignment.TOP, 0xFF000000);
-		graphics = GraviSim3D.getApplet().createGraphics((int) x, (int) y, PApplet.P3D);
+	public UI(double size_x, double size_y) {
+		super(0.0, 0.0, 0.0, size_x, size_y, 1.0, EHorizontalAlignment.LEFT, EVerticalAlignment.TOP, 0xFF000000);
+		graphics = GraviSim3D.getApplet().createGraphics((int) size_x, (int) size_y, PApplet.P3D);
 	}
 
 	/*

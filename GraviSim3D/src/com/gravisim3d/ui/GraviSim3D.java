@@ -155,6 +155,7 @@ public class GraviSim3D extends PApplet {
 	public void settings() {
 		super.settings();
 		fullScreen(P3D);
+		//size(400, 600, P3D);
 	}
 
 	/*
@@ -165,10 +166,11 @@ public class GraviSim3D extends PApplet {
 	@Override
 	public void setup() {
 		super.setup();
+		//size(400, 600, P3D);
 		Button settings_menu_item;
 		Button about_menu_item;
 		Button exit_menu_item;
-		PVectorD constraint = new PVectorD((double) pixelWidth, (double) pixelHeight, 1.0);
+		PVectorD constraint = new PVectorD((double) width, (double) height, 1.0);
 		// temporary_graphics = createGraphics((int) constraint.x, (int)
 		// constraint.y, P3D);
 		universe = new Universe3D(constraint.x, constraint.y, 10.0);
@@ -257,11 +259,12 @@ public class GraviSim3D extends PApplet {
 		zoom_text = new Text("", 20.0, 20.0, 0.0, 12.0, EHorizontalAlignment.LEFT, EVerticalAlignment.TOP, 0xFFFFFF00);
 		// ui.addDrawable(universe);
 		ui.addDrawable(zoom_text);
+		ui.addDrawable(new Panel(20.0, 20.0, -1.0, 12.0, 12.0, 1.0, EHorizontalAlignment.LEFT, EVerticalAlignment.TOP, 0xFFFFFFFF));
 		main_menu_button = new Button("Menu", 0.0, 0.0, 0.0, 100.0, 40.0, 1.0, EHorizontalAlignment.RIGHT,
 				EVerticalAlignment.TOP, 0x7F3F3FFF, 0xFF3F3FFF, 0xFF7F7FFF, 0x7FFF3F3F);
 		main_menu_button.setHint("Show menu");
 		main_menu_button.getCaption().setPos(35.0, 0.0, 0.1);
-		main_menu_button.getCaption().setTextSize(20.0);
+		main_menu_button.getCaption().setTextSize(10.0);
 		main_menu_button.addDrawable(new ImageBox("Titros_icon.png", 5.0, 0.0, 1.0, 24.0, 24.0, 1.0,
 				EHorizontalAlignment.LEFT, EVerticalAlignment.CENTER));
 
@@ -553,6 +556,7 @@ public class GraviSim3D extends PApplet {
 
 		mode_menu = new Menu(0.0, 0.0, 0.0, 50.0, 40.0, EHorizontalAlignment.LEFT, EVerticalAlignment.CENTER,
 				0x3F3F3F7F, 0x7F3F3FFF, 0xFF3F3FFF, 0xFF7F7FFF, 0x7FFF3F3F, EMenuAlignment.VERTICAL);
+		//mode_menu.createMenuItems((IMenuItem[]) mode_menu_items);
 		mode_menu.setHint("This is the mode menu\n\nSelect any mode for your needs");
 		mode_menu.createMenuItems(EGraviSim3DMode.values());
 		/*

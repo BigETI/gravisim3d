@@ -31,7 +31,7 @@ public class FontLoader {
 		if (fonts.containsKey(font_name))
 			ret = fonts.get(font_name);
 		else {
-			ret = GraviSim3D.getApplet().createFont(font_name + ".ttf", 120);
+			ret = GraviSim3D.getApplet().createFont(font_name + ".ttf", 120.0f, true);
 			fonts.put(font_name, ret);
 		}
 		return ret;

@@ -47,11 +47,11 @@ public class Text extends ADrawable {
 	 * @param vertical_alignment
 	 *            Vertical alignment
 	 * @param color
-	 *            COlor
+	 *            Color
 	 */
 	public Text(String text, double x, double y, double z, double text_size, EHorizontalAlignment horizontal_alignment,
 			EVerticalAlignment vertical_alignment, int color) {
-		super(x, y, z, 1.0, 1.0, 1.0, horizontal_alignment, vertical_alignment, color);
+		super(x, y, z, 0.0, 0.0, 1.0, horizontal_alignment, vertical_alignment, color);
 		setText(text);
 		setTextSize(text_size);
 		setFont("Ubuntu-C");
@@ -111,7 +111,7 @@ public class Text extends ADrawable {
 				if (curr_col > col)
 					col = curr_col;
 			}
-			new_size = new PVectorD(text_size * (float) col, (text_size * 1.5) * (float) row, 1.0);
+			new_size = new PVectorD(text_size * (float) col, text_size * 1.5 * (float) row, 1.0);
 		} else
 			new_size = new PVectorD(0.0, 0.0, 1.0);
 		setSize(new_size.x, new_size.y, new_size.z);
@@ -144,9 +144,16 @@ public class Text extends ADrawable {
 	 */
 	@Override
 	protected void draw(PGraphics graphics) {
+		/*graphics.pushMatrix();
+		graphics.rect(0.0f, 0.0f, 1.0f, 1.0f);
+		graphics.popMatrix();*/
+		
 		graphics.pushMatrix();
-		graphics.scale(1.0f / getSize().x.floatValue(), 1.0f / getSize().y.floatValue(),
-				1.0f / getSize().z.floatValue());
+		//graphics.scale((float) (3.0 / getSize().x.doubleValue()), (float) (2.0 / getSize().y.doubleValue()),
+				//(float) (1.0 / getSize().z.doubleValue()));
+		graphics.scale((float) (1.5 / getSize().x.doubleValue()), (float) (1.0 / getSize().y.doubleValue()),
+				(float) (1.0 / getSize().z.doubleValue()));
+		//System.out.println("Text size: " + getSize() + "\n\t\"" + text + "\"");
 		graphics.translate(0.0f, (float) text_size, 0.0f);
 		graphics.textFont(font, (float) text_size);
 		graphics.text(text, 0.0f, 0.0f);
