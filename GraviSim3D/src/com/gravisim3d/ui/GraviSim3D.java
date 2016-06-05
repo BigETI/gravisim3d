@@ -264,7 +264,7 @@ public class GraviSim3D extends PApplet {
 				EVerticalAlignment.TOP, 0x7F3F3FFF, 0xFF3F3FFF, 0xFF7F7FFF, 0x7FFF3F3F);
 		main_menu_button.setHint("Show menu");
 		main_menu_button.getCaption().setPos(35.0, 0.0, 0.1);
-		main_menu_button.getCaption().setTextSize(10.0);
+		main_menu_button.getCaption().setTextSize(18.0);
 		main_menu_button.addDrawable(new ImageBox("Titros_icon.png", 5.0, 0.0, 1.0, 24.0, 24.0, 1.0,
 				EHorizontalAlignment.LEFT, EVerticalAlignment.CENTER));
 

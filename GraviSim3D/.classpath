@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="F:/DEV/Repos/GraviSim3D/GraviSim3D/gluegen-rt-natives-windows-amd64.jar"/>
 	<classpathentry kind="lib" path="F:/DEV/Repos/GraviSim3D/GraviSim3D/jogl-all.jar"/>
 	<classpathentry kind="lib" path="F:/DEV/Repos/GraviSim3D/GraviSim3D/jogl-all-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="F:/DEV/Repos/DiscordETI/DiscordETI/GraviSim3DTest.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
